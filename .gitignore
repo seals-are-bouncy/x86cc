@@ -9,3 +9,6 @@ missing
 config.log
 config.status
 */.deps
+x86cc
+*.tar.gz
+.vscode
