@@ -41,6 +41,10 @@ enum token_types {
     EOLi, // End of Line
 
     Bpt, // Begin preprocessor tag
+    Pdt, // Preprocessor Define tag
+
+    Prg, // Pragma
+
 };
 
 typedef struct _token token;

@@ -55,7 +55,7 @@ static error_t parse_opt(int key, char *arg, struct argp_state *state)
 		break;
 
 	case ARGP_KEY_END:
-		if (state->arg_num < 2)
+		if (state->arg_num < 1)
 			/* Not enough arguments. */
 			argp_usage(state);
 		break;
