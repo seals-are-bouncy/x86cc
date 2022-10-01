@@ -1,88 +1,100 @@
 #include <stdlib.h>
 #include <argp.h>
-#include "arguments.h"
-#include "really.h"
+#include "out.h"
 
 const char *argp_program_version =
-	"0.0.1";
+    "x86cc 0.1";
 const char *argp_program_bug_address =
-	"<who-asked@domain.com>";
+    "https://github.com/seals-are-bouncy/x86cc";
 
 /* Program documentation. */
 static char doc[] =
-	"x86cc -- A compiler for the x86 architecture.";
+    "x86cc -- a c compiler";
 
 /* A description of the arguments we accept. */
-static char args_doc[] = "file..";
+static char args_doc[] = "file...";
 
 /* The options we understand. */
 static struct argp_option options[] = {
-	{"verbose", 'v', 0, 0, "Produce verbose output"},
-	//{"quiet",    'q', 0,      0,  "Don't produce any output" },
-	//{"silent",   's', 0,      OPTION_ALIAS },
-	{"output", 'o', "file", 0,
-	 "Output to FILE instead of standard output"},
-	{0}};
+    {"standard", 't', 0, 0, "Set the C standard"},
+    {"quiet", 'q', 0, 0, "Don't produce any output"},
+    {"silent", 's', 0, OPTION_ALIAS},
+    {"output", 'o', "FILE", 0,
+     "Output to FILE instead of standard output"},
+    {0}};
+
+/* Used by main to communicate with parse_opt. */
+struct arguments
+{
+    char *args[90]; /* arg1 & arg2 */
+    int silent, verbose, argc;
+    char *output_file, std;
+};
 
 /* Parse a single option. */
-static error_t parse_opt(int key, char *arg, struct argp_state *state)
+static error_t
+parse_opt(int key, char *arg, struct argp_state *state)
 {
-	/* Get the input argument from argp_parse, which we
-	   know is a pointer to our arguments structure. */
-	struct arguments *arguments = state->input;
+    /* Get the input argument from argp_parse, which we
+       know is a pointer to our arguments structure. */
+    struct arguments *arguments = state->input;
 
-	switch (key)
-	{
-	case 'q':
-	case 's':
-		arguments->silent = 1;
-		break;
-	case 'v':
-		arguments->verbose = 1;
-		break;
-	case 'o':
-		arguments->output_file = arg;
-		break;
+    switch (key)
+    {
+    case 't':
+        arguments->std = arg;        
+    case 's':
+        arguments->silent = 1;
+        break;
+    case 'v':
+        arguments->verbose = 1;
+        break;
+    case 'o':
+        arguments->output_file = arg;
+        break;
 
-	case ARGP_KEY_ARG:
-		if (state->arg_num >= 2)
-			/* Too many arguments. */
-			argp_usage(state);
+    case ARGP_KEY_ARG:
+        //if (state->arg_num >= 2)
+            /* Too many arguments. */
+            //argp_usage(state);
 
-		arguments->files[state->arg_num] = arg;
-		arguments->file_count++;
+        arguments->args[state->arg_num] = arg;
+        arguments->argc++;
 
-		break;
+        break;
 
-	case ARGP_KEY_END:
-		if (state->arg_num < 1)
-			/* Not enough arguments. */
-			argp_usage(state);
-		break;
+    case ARGP_KEY_END:
+        if (state->arg_num < 1)
+            /* Not enough arguments. */
+            argp_usage(state);
+        break;
 
-	default:
-		return ARGP_ERR_UNKNOWN;
-	}
-	return 0;
+    default:
+        return ARGP_ERR_UNKNOWN;
+    }
+    return 0;
 }
 
 /* Our argp parser. */
 static struct argp argp = {options, parse_opt, args_doc, doc};
+
 int main(int argc, char **argv)
 {
-	struct arguments arguments;
+    struct arguments arguments;
 
-	/* Default values. */
-	arguments.silent = 0;
-	arguments.verbose = 0;
-	arguments.file_count = 0;
-	arguments.output_file = "a.out";
+    /* Default values. */
+    arguments.silent = 0;
+    arguments.verbose = 0;
+    arguments.output_file = "-";
 
-	/* Parse our arguments; every option seen by parse_opt will
-	   be reflected in arguments. */
-	argp_parse(&argp, argc, argv, 0, 0, &arguments);
+    /* Parse our arguments; every option seen by parse_opt will
+       be reflected in arguments. */
+    argp_parse(&argp, argc, argv, 0, 0, &arguments);
 
-	do_files(&arguments);
+    for (size_t i = 0; i < arguments.argc; i++)
+    {
+        out_success(arguments.args[i]);
+    }
+    
 
-	return 0;
 }
