@@ -91,7 +91,8 @@ int main(int argc, char **argv)
        be reflected in arguments. */
     argp_parse(&argp, argc, argv, 0, 0, &arguments);
 
+    // check configuration file
+
     printf("%sSUCCESS%s\n", "\e[1;92m", reset);
-    
 
 }
