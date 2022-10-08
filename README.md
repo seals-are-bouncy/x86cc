@@ -9,6 +9,28 @@ x86 C Compiler
 - [ ] Code Generation
 - [ ] Linking
 
+## CPU Flags
+Want to expand on this list? Run cpuid2cpuflags on your computer and add them to this list.
+- [ ] Zen Architecture
+- [ ] aes
+- [ ] avx 
+- [ ] avx2 
+- [ ] f16c
+- [ ] fma3
+- [ ] mmx
+- [ ] mmxext
+- [ ] pclmul
+- [ ] popcnt
+- [ ] rdrand
+- [ ] sha
+- [ ] sse
+- [ ] sse2
+- [ ] sse3
+- [ ] sse4_1
+- [ ] sse4_2
+- [ ] sse4a
+- [ ] ssse3
+
 ## Goal
 
 The goal of this project is to create a C99 standard-compliant compiler for the x86 architecture.
