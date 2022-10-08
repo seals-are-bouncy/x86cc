@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include <argp.h>
-#include "out.h"
+#include "color.h"
 
 const char *argp_program_version =
     "x86cc 0.1";
@@ -91,10 +91,7 @@ int main(int argc, char **argv)
        be reflected in arguments. */
     argp_parse(&argp, argc, argv, 0, 0, &arguments);
 
-    for (size_t i = 0; i < arguments.argc; i++)
-    {
-        out_success(arguments.args[i]);
-    }
+    printf("%sSUCCESS%s\n", "\e[1;92m", reset);
     
 
 }

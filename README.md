@@ -1,10 +1,18 @@
 # x86cc
 x86 C Compiler
 
+## Todo 
+- [ ] Default configuration file in /usr/share/x86cc/x86cc.conf
+- [ ] Read configuration file search for one in /etc/x86cc.conf or ~/.share/x86cc.conf.
+- [ ] Lexical Analysis
+- [ ] Abstract Syntax Tree
+- [ ] Code Generation
+- [ ] Linking
+
 ## Goal
 
 The goal of this project is to create a C99 standard-compliant compiler for the x86 architecture.
-If you wish this project to include a certain stadnard, be sure to implement it yourself. PRs are welcome!
+If you wish this project to include a certain standard, be sure to implement it yourself. PRs are welcome!
 
 ## Building
 
